@@ -1,0 +1,12 @@
+# Basic .gitignore for Python projects
+
+# .gitignore
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.DS_Store
+
+# Ignorar datos y modelos pesados (opcional, pero recomendado si pesan >100MB)
+data/
+models/
