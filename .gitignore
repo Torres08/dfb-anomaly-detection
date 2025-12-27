@@ -10,4 +10,4 @@ __pycache__/
 # Ignorar datos y modelos pesados (opcional, pero recomendado si pesan >100MB)
 data/
 # its only 4 mb
-#models/
+models/
