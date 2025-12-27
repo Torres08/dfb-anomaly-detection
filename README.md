@@ -42,10 +42,24 @@ root@2e1b13483c26:/app# ls
 Dockerfile  LICENSE  README.md  data  documents  models  notebooks  requirements.txt  src
 ```
 
+with jupyter to work 
+```bash
+docker run -it -p 8888:8888 -v $(pwd):/app dfb-project
+root@2e1b13483c26:/app#  jupyter lab --ip=0.0.0.0 --allow-root --no-browser
+```
+
+use the url to connect it 
+
 goes inside the container 
 
 
 the place where you are going to try the scripts 
+
+another terminal 
+```bash
+docker ps
+docker exec -it <ID> bash
+```
 
 ## License
 Academic Use / MIT License.
