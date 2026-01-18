@@ -42,40 +42,62 @@ The complete pipeline is structured as follows:
 └── requirements.txt    # Python dependencies
 ```
 
-Note:
+**Note:**
 Data and trained models are not included in the repository due to size constraints.
 
-## How to Run
-We are going to use Docker Engine.
+## Docker Environment and Execution
 
-build it take 3-8 mins (just wait)
+To ensure reproducibility and avoid dependency conflicts, the entire project is executed inside a **Docker container**. The container includes all required Python libraries and system dependencies needed to run the notebooks and scripts.
+
+### Build the Docker Image
+
+From the root directory of the repository, build the Docker image using:
 
 ```bash
-docker build -t dfb-project . 
-docker run -it -v ${PWD}:/app dfb-project
-
-root@2e1b13483c26:/app# ls
-Dockerfile  LICENSE  README.md  data  documents  models  notebooks  requirements.txt  src
+docker build -t dfb-project .
 ```
+The build process may take several minutes, depending on the host system and network speed.
 
-with jupyter to work 
+### Run the Docker Container (Interactive Mode)
+```bash
+docker run -it -v ${pwd}:/app dfb-project
+```
+This command mounts the project directory into the container, allowing all source files and notebooks to be accessed and modified from within the Docker environment.
+
+### Run Jupyter Lab Inside Docker
+To work with the Jupyter notebooks, the container must expose a network port:
 ```bash
 docker run -it -p 8888:8888 -v $(pwd):/app dfb-project
-root@2e1b13483c26:/app#  jupyter lab --ip=0.0.0.0 --allow-root --no-browser
 ```
 
-use the url to connect it 
+Once inside the container, launch Jupyter Lab with:
+```bash
+jupyter lab --ip=0.0.0.0 --allow-root --no-browser
+```
+Jupyter will display a URL in the terminal. Open this URL in a web browser on the host machine to access the notebook interface.
 
-goes inside the container 
+### Access a Running Container from Another Terminal
 
+If the container is already running and a new terminal session is required, first list active containers:
 
-the place where you are going to try the scripts 
-
-another terminal 
 ```bash
 docker ps
-docker exec -it <ID> bash
 ```
+
+Then attach to the desired container using:
+
+```bash
+docker exec -it <CONTAINER_ID> bash
+```
+
+This allows multiple terminals to interact with the same running Docker environment.
+
+### Execution Notes
+
+- All notebooks must be executed **from within the Docker container**.
+- No manual dependency installation is required outside Docker.
+- Audio data and trained models must be placed in the appropriate directories before execution.
+
 
 ## License
 Academic Use / MIT License.
