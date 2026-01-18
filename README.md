@@ -1,17 +1,30 @@
 # Project DFB: Motor Sound Anomaly Detection
 
 **Students:** Rafael Pardo Rueda, Juan Luis Torres Ramos  
-**Context:** Project DFB (Extends Lab 2) | **Deadline:** Jan 17, 2025
+**Context:** Project DFB (Extends Lab 2) 
 
 
 ## Overview
 An unsupervised system to detect faults in electrical motors using audio analysis. It learns the normal operational signature and flags deviations as anomalies.
 
-**Pipeline:**
-1.  **Latent Representation (Part A):** A Convolutional Autoencoder (CAE) compresses raw audio spectrograms into a compact feature vector.
-2.  (Juan Luis)
-3.  **Anomaly Detection (Part B):** An Isolation Forest (or SVM) classifies these vectors to identify non-nominal behaviors. (Rafa)
+## Pipeline
 
+The complete pipeline is structured as follows:
+
+1. **Audio Preprocessing**  
+   Raw motor sound recordings are converted into time–frequency representations (Mel-spectrograms).
+
+2. **Latent Feature Extraction (Autoencoder)**  
+   A Convolutional Autoencoder (CAE) is trained to reconstruct spectrograms corresponding to healthy motor operation.  
+   The encoder compresses each input into a low-dimensional latent representation, reducing dimensionality and filtering noise.
+
+3. **Anomaly Detection**  
+   Latent vectors are used as input for two anomaly detection algorithms:
+   - **Isolation Forest**
+   - **One-Class Support Vector Machine (OC-SVM)**
+
+4. **Evaluation and Comparison**  
+   The models are evaluated using standard anomaly detection metrics (precision, recall, F1-score, FPR, FNR), and their performance is compared under identical test conditions.
 
 ## Project Structure
 ```text
@@ -19,15 +32,18 @@ An unsupervised system to detect faults in electrical motors using audio analysi
 ├── data/               # Raw audio & processed numpy arrays
 ├── models/             # Saved Autoencoder (.h5) & ML models (.pkl)
 ├── src/
-│   ├── preprocessing.py    # Audio -> Mel-Spectrograms
-│   ├── autoencoder.py      # Deep Learning Architecture
-│   ├── ad_models.py        # Isolation Forest / SVM Logic
-│   └── pipeline.py         # Main execution script
+│   ├── preprocessing.py                 # Audio preprocessing utilities
+│   ├── Autoencoder.ipynb                # Latent feature extraction (CAE)
+│   ├── Anomaly_Detection_IF_OCSVM.ipynb # Anomaly detection and evaluation
+│   └── Test/                            # Auxiliary scripts used for preliminary testing
+│       ├── ad_models.py
+│       └── pipeline.py
 ├── Dockerfile          # Environment configuration
-└── requirements.txt    # Dependencies
+└── requirements.txt    # Python dependencies
 ```
 
-Data and models does not upload to github.
+Note:
+Data and trained models are not included in the repository due to size constraints.
 
 ## How to Run
 We are going to use Docker Engine.
